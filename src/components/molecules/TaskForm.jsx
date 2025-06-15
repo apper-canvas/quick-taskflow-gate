@@ -8,12 +8,13 @@ import Select from '@/components/atoms/Select';
 import { taskService, categoryService } from '@/services';
 
 const TaskForm = ({ task, onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     title: '',
     description: '',
     categoryId: '',
     dueDate: '',
-    reminderTime: ''
+    reminderTime: '',
+    status: 'pending'
   });
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,12 +23,13 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
   useEffect(() => {
     loadCategories();
     if (task) {
-      setFormData({
+setFormData({
         title: task.title || '',
         description: task.description || '',
         categoryId: task.categoryId || '',
         dueDate: task.dueDate ? format(new Date(task.dueDate), "yyyy-MM-dd'T'HH:mm") : '',
-        reminderTime: task.reminderTime ? format(new Date(task.reminderTime), "yyyy-MM-dd'T'HH:mm") : ''
+        reminderTime: task.reminderTime ? format(new Date(task.reminderTime), "yyyy-MM-dd'T'HH:mm") : '',
+        status: task.status || 'pending'
       });
     }
   }, [task]);
@@ -99,11 +101,16 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
     }
   };
 
-  const categoryOptions = categories.map(category => ({
+const categoryOptions = categories.map(category => ({
     value: category.id,
     label: category.name
   }));
 
+  const statusOptions = [
+    { value: 'pending', label: 'Pending' },
+    { value: 'in-progress', label: 'In Progress' },
+    { value: 'completed', label: 'Completed' }
+  ];
 return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <motion.div
@@ -151,6 +158,16 @@ return (
               options={categoryOptions}
               error={errors.categoryId}
               placeholder="Select a category"
+              required
+/>
+
+            <Select
+              label="Status"
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              options={statusOptions}
+              placeholder="Select status"
               required
             />
 
