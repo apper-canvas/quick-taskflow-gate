@@ -104,89 +104,95 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
     label: category.name
   }));
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-lg border p-6 shadow-sm"
-    >
-      <h2 className="text-xl font-display font-semibold text-gray-900 mb-6">
-        {task ? 'Edit Task' : 'Create New Task'}
-      </h2>
+return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <motion.div
+        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 20, scale: 0.95 }}
+        className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="p-6">
+          <h2 className="text-xl font-display font-semibold text-gray-900 mb-6">
+            {task ? 'Edit Task' : 'Create New Task'}
+          </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          label="Title"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          error={errors.title}
-          placeholder="Enter task title"
-          required
-        />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              label="Title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              error={errors.title}
+              placeholder="Enter task title"
+              required
+            />
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Description
-          </label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
-            placeholder="Enter task description"
-          />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Description
+              </label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                placeholder="Enter task description"
+              />
+            </div>
+
+            <Select
+              label="Category"
+              name="categoryId"
+              value={formData.categoryId}
+              onChange={handleChange}
+              options={categoryOptions}
+              error={errors.categoryId}
+              placeholder="Select a category"
+              required
+            />
+
+            <Input
+              label="Due Date"
+              name="dueDate"
+              type="datetime-local"
+              value={formData.dueDate}
+              onChange={handleChange}
+              error={errors.dueDate}
+              required
+            />
+
+            <Input
+              label="Reminder Time (Optional)"
+              name="reminderTime"
+              type="datetime-local"
+              value={formData.reminderTime}
+              onChange={handleChange}
+            />
+
+            <div className="flex justify-end space-x-3 pt-4">
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={onCancel}
+                disabled={loading}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                loading={loading}
+                disabled={loading}
+              >
+                {task ? 'Update Task' : 'Create Task'}
+              </Button>
+            </div>
+          </form>
         </div>
-
-        <Select
-          label="Category"
-          name="categoryId"
-          value={formData.categoryId}
-          onChange={handleChange}
-          options={categoryOptions}
-          error={errors.categoryId}
-          placeholder="Select a category"
-          required
-        />
-
-        <Input
-          label="Due Date"
-          name="dueDate"
-          type="datetime-local"
-          value={formData.dueDate}
-          onChange={handleChange}
-          error={errors.dueDate}
-          required
-        />
-
-        <Input
-          label="Reminder Time (Optional)"
-          name="reminderTime"
-          type="datetime-local"
-          value={formData.reminderTime}
-          onChange={handleChange}
-        />
-
-        <div className="flex justify-end space-x-3 pt-4">
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={onCancel}
-            disabled={loading}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            loading={loading}
-            disabled={loading}
-          >
-            {task ? 'Update Task' : 'Create Task'}
-          </Button>
-        </div>
-      </form>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 

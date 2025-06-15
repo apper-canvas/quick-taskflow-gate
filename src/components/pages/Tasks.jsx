@@ -5,7 +5,6 @@ import TaskList from '@/components/organisms/TaskList';
 import TaskForm from '@/components/molecules/TaskForm';
 import Button from '@/components/atoms/Button';
 import ApperIcon from '@/components/ApperIcon';
-
 const Tasks = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -69,21 +68,16 @@ const Tasks = () => {
         </div>
       </motion.div>
 
-      {/* Create/Edit Form */}
+{/* Create/Edit Form Modal */}
       <AnimatePresence>
         {showCreateForm && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="mb-8"
-          >
+          <div onClick={handleFormCancel}>
             <TaskForm
               task={editingTask}
               onSubmit={handleFormSubmit}
               onCancel={handleFormCancel}
             />
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
 
