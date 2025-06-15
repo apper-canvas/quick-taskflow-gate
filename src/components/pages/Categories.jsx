@@ -258,14 +258,13 @@ const Categories = () => {
             icon="Tags"
           />
         ) : (
-          <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
+<div className="bg-white rounded-lg border shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-900">
                 {categories.length} {categories.length === 1 ? 'Category' : 'Categories'}
               </h2>
             </div>
-
-            <div className="divide-y divide-gray-200">
+<div className="max-h-96 overflow-y-auto divide-y divide-gray-200">
               {categories.map((category, index) => (
                 <motion.div
                   key={category.id}
