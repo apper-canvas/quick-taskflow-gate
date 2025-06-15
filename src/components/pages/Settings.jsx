@@ -96,9 +96,9 @@ const Settings = () => {
     { value: 1440, label: '1 day' }
   ];
 
-  if (loading) {
+if (loading) {
     return (
-      <div className="p-6 max-w-full overflow-hidden">
+      <div className="p-6 max-w-full overflow-y-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-display font-bold text-gray-900">Settings</h1>
         </div>
@@ -109,9 +109,9 @@ const Settings = () => {
     );
   }
 
-  if (error) {
+if (error) {
     return (
-      <div className="p-6 max-w-full overflow-hidden">
+      <div className="p-6 max-w-full overflow-y-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-display font-bold text-gray-900">Settings</h1>
         </div>
@@ -121,9 +121,8 @@ const Settings = () => {
       </div>
     );
   }
-
-  return (
-    <div className="p-6 max-w-full overflow-hidden">
+return (
+    <div className="p-6 max-w-full overflow-y-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
