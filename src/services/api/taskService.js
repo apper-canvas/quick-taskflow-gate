@@ -16,15 +16,16 @@ class TaskService {
     await delay(200);
     const task = this.tasks.find(t => t.id === id);
     return task ? { ...task } : null;
+return task ? { ...task } : null;
   }
 
   async create(taskData) {
     await delay(400);
     const newTask = {
       id: Date.now().toString(),
-      ...taskData,
       createdAt: new Date().toISOString(),
-      status: 'pending'
+      status: 'pending',
+      parentTaskId: taskData.parentTaskId || null
     };
     this.tasks.push(newTask);
     return { ...newTask };
@@ -110,7 +111,67 @@ class TaskService {
       pending,
       inProgress,
       overdue,
-      completionRate: total > 0 ? Math.round((completed / total) * 100) : 0
+completionRate: total > 0 ? Math.round((completed / total) * 100) : 0
+    };
+  }
+  async getSubtasks(parentId) {
+    await delay(200);
+    return this.tasks.filter(t => t.parentTaskId === parentId).map(t => ({ ...t }));
+  }
+
+  async createSubtask(parentId, taskData) {
+    await delay(400);
+    const parentTask = this.tasks.find(t => t.id === parentId);
+    if (!parentTask) {
+      throw new Error('Parent task not found');
+    }
+    
+    const newSubtask = {
+      id: Date.now().toString(),
+      ...taskData,
+      parentTaskId: parentId,
+      createdAt: new Date().toISOString(),
+      status: 'pending'
+    };
+    this.tasks.push(newSubtask);
+    return { ...newSubtask };
+  }
+
+  async getParentTasks() {
+    await delay(200);
+    return this.tasks.filter(t => !t.parentTaskId).map(t => ({ ...t }));
+  }
+
+  async getTaskWithSubtasks(taskId) {
+    await delay(300);
+    const task = this.tasks.find(t => t.id === taskId);
+    if (!task) return null;
+    
+    const subtasks = this.tasks.filter(t => t.parentTaskId === taskId);
+    return {
+      ...task,
+      subtasks: subtasks.map(t => ({ ...t }))
+    };
+  }
+
+  async updateSubtaskOrder(parentId, subtaskIds) {
+    await delay(300);
+    // This would typically update order in database
+    // For now, just verify all subtasks exist
+    const subtasks = this.tasks.filter(t => t.parentTaskId === parentId);
+    return subtasks.map(t => ({ ...t }));
+  }
+
+  async getSubtaskProgress(parentId) {
+    await delay(200);
+    const subtasks = this.tasks.filter(t => t.parentTaskId === parentId);
+    if (subtasks.length === 0) return { total: 0, completed: 0, percentage: 0 };
+    
+    const completed = subtasks.filter(t => t.status === 'completed').length;
+    return {
+      total: subtasks.length,
+      completed,
+      percentage: Math.round((completed / subtasks.length) * 100)
     };
   }
 }

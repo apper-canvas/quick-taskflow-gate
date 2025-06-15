@@ -22,11 +22,13 @@ const UpcomingTasks = ({ className = '' }) => {
     setLoading(true);
     setError(null);
     try {
-      const [upcomingTasks, categoriesData] = await Promise.all([
+const [upcomingTasks, categoriesData] = await Promise.all([
         taskService.getUpcoming(),
         categoryService.getAll()
       ]);
-      setTasks(upcomingTasks);
+      // Filter out subtasks from upcoming view to avoid duplicates
+      const parentTasks = upcomingTasks.filter(task => !task.parentTaskId);
+      setTasks(parentTasks);
       setCategories(categoriesData);
     } catch (err) {
       setError(err.message || 'Failed to load upcoming tasks');
@@ -101,11 +103,13 @@ const UpcomingTasks = ({ className = '' }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <TaskCard
+<TaskCard
                 task={task}
                 categories={categories}
                 onUpdate={handleTaskUpdate}
                 onDelete={handleTaskDelete}
+                showSubtasks={false}
+                level={0}
               />
             </motion.div>
           ))}

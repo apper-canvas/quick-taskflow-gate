@@ -7,21 +7,24 @@ import Input from '@/components/atoms/Input';
 import Select from '@/components/atoms/Select';
 import { taskService, categoryService } from '@/services';
 
-const TaskForm = ({ task, onSubmit, onCancel }) => {
+const TaskForm = ({ task, onSubmit, onCancel, parentTask }) => {
 const [formData, setFormData] = useState({
     title: '',
     description: '',
     categoryId: '',
     dueDate: '',
     reminderTime: '',
-    status: 'pending'
+    status: 'pending',
+    parentTaskId: parentTask?.id || null
   });
-  const [categories, setCategories] = useState([]);
+const [categories, setCategories] = useState([]);
+  const [parentTasks, setParentTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
+useEffect(() => {
     loadCategories();
+    loadParentTasks();
     if (task) {
 setFormData({
         title: task.title || '',
@@ -29,17 +32,35 @@ setFormData({
         categoryId: task.categoryId || '',
         dueDate: task.dueDate ? format(new Date(task.dueDate), "yyyy-MM-dd'T'HH:mm") : '',
         reminderTime: task.reminderTime ? format(new Date(task.reminderTime), "yyyy-MM-dd'T'HH:mm") : '',
-        status: task.status || 'pending'
+        status: task.status || 'pending',
+        parentTaskId: task.parentTaskId || null
       });
+    } else if (parentTask) {
+      setFormData(prev => ({
+        ...prev,
+        parentTaskId: parentTask.id,
+        categoryId: parentTask.categoryId
+      }));
     }
-  }, [task]);
+  }, [task, parentTask]);
 
-  const loadCategories = async () => {
+const loadCategories = async () => {
     try {
       const data = await categoryService.getAll();
       setCategories(data);
     } catch (error) {
       toast.error('Failed to load categories');
+    }
+  };
+
+  const loadParentTasks = async () => {
+    try {
+      const data = await taskService.getParentTasks();
+      // Filter out the current task if editing to prevent self-referencing
+      const filteredTasks = task ? data.filter(t => t.id !== task.id) : data;
+      setParentTasks(filteredTasks);
+    } catch (error) {
+      toast.error('Failed to load parent tasks');
     }
   };
 
@@ -67,18 +88,22 @@ setFormData({
     
     if (!validateForm()) return;
 
-    setLoading(true);
+setLoading(true);
     try {
       const taskData = {
         ...formData,
         dueDate: new Date(formData.dueDate).toISOString(),
-        reminderTime: formData.reminderTime ? new Date(formData.reminderTime).toISOString() : null
+        reminderTime: formData.reminderTime ? new Date(formData.reminderTime).toISOString() : null,
+        parentTaskId: formData.parentTaskId || null
       };
 
-      let result;
+let result;
       if (task) {
         result = await taskService.update(task.id, taskData);
         toast.success('Task updated successfully');
+      } else if (parentTask) {
+        result = await taskService.createSubtask(parentTask.id, taskData);
+        toast.success('Subtask created successfully');
       } else {
         result = await taskService.create(taskData);
         toast.success('Task created successfully');
@@ -106,6 +131,11 @@ const categoryOptions = categories.map(category => ({
     label: category.name
   }));
 
+  const parentTaskOptions = parentTasks.map(task => ({
+    value: task.id,
+    label: task.title
+  }));
+
   const statusOptions = [
     { value: 'pending', label: 'Pending' },
     { value: 'in-progress', label: 'In Progress' },
@@ -120,9 +150,9 @@ return (
         className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6">
+<div className="p-6">
           <h2 className="text-xl font-display font-semibold text-gray-900 mb-6">
-            {task ? 'Edit Task' : 'Create New Task'}
+            {task ? 'Edit Task' : parentTask ? `Create Subtask for "${parentTask.title}"` : 'Create New Task'}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -160,6 +190,20 @@ return (
               placeholder="Select a category"
               required
 />
+
+            {!parentTask && (
+              <Select
+                label="Parent Task (Optional)"
+                name="parentTaskId"
+                value={formData.parentTaskId || ''}
+                onChange={handleChange}
+                options={[
+                  { value: '', label: 'No parent task' },
+                  ...parentTaskOptions
+                ]}
+                placeholder="Select parent task"
+              />
+            )}
 
             <Select
               label="Status"
@@ -202,8 +246,8 @@ return (
                 type="submit"
                 loading={loading}
                 disabled={loading}
-              >
-                {task ? 'Update Task' : 'Create Task'}
+>
+                {task ? 'Update Task' : parentTask ? 'Create Subtask' : 'Create Task'}
               </Button>
             </div>
           </form>

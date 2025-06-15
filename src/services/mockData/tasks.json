@@ -5,48 +5,97 @@
     "description": "Compile Q3 performance metrics and create presentation for board meeting",
     "categoryId": "work",
     "dueDate": "2024-12-20T17:00:00.000Z",
-    "status": "in-progress",
+"status": "in-progress",
     "createdAt": "2024-12-10T09:00:00.000Z",
-    "reminderTime": "2024-12-20T08:00:00.000Z"
+    "reminderTime": "2024-12-20T08:00:00.000Z",
+    "parentTaskId": null
   },
   {
     "id": "2",
     "title": "Doctor appointment",
     "description": "Annual check-up with Dr. Smith",
     "categoryId": "personal",
-    "dueDate": "2024-12-18T14:30:00.000Z",
+"dueDate": "2024-12-18T14:30:00.000Z",
     "status": "pending",
     "createdAt": "2024-12-08T10:30:00.000Z",
-    "reminderTime": "2024-12-18T13:30:00.000Z"
+    "reminderTime": "2024-12-18T13:30:00.000Z",
+    "parentTaskId": null
   },
   {
     "id": "3",
     "title": "Grocery shopping",
     "description": "Buy ingredients for weekend dinner party",
     "categoryId": "personal",
-    "dueDate": "2024-12-17T18:00:00.000Z",
+"dueDate": "2024-12-17T18:00:00.000Z",
     "status": "completed",
     "createdAt": "2024-12-15T08:00:00.000Z",
-    "reminderTime": null
+    "reminderTime": null,
+    "parentTaskId": null
   },
   {
     "id": "4",
     "title": "Review code for new feature",
     "description": "Review pull request #245 for user authentication improvements",
     "categoryId": "work",
-    "dueDate": "2024-12-19T16:00:00.000Z",
+"dueDate": "2024-12-19T16:00:00.000Z",
     "status": "pending",
     "createdAt": "2024-12-12T11:15:00.000Z",
-    "reminderTime": "2024-12-19T10:00:00.000Z"
+    "reminderTime": "2024-12-19T10:00:00.000Z",
+    "parentTaskId": null
   },
   {
     "id": "5",
     "title": "Plan vacation itinerary",
     "description": "Research and book activities for summer vacation in Italy",
     "categoryId": "personal",
-    "dueDate": "2024-12-25T12:00:00.000Z",
+"dueDate": "2024-12-25T12:00:00.000Z",
     "status": "pending",
     "createdAt": "2024-12-11T15:45:00.000Z",
-    "reminderTime": "2024-12-24T10:00:00.000Z"
+    "reminderTime": "2024-12-24T10:00:00.000Z",
+    "parentTaskId": null
+  },
+  {
+    "id": "6",
+    "title": "Research destinations",
+    "description": "Look up popular tourist attractions and activities in Rome and Florence",
+    "categoryId": "personal",
+    "dueDate": "2024-12-22T18:00:00.000Z",
+    "status": "completed",
+    "createdAt": "2024-12-11T16:00:00.000Z",
+    "reminderTime": null,
+    "parentTaskId": "5"
+  },
+  {
+    "id": "7",
+    "title": "Book accommodations",
+    "description": "Find and reserve hotels in Rome and Florence for vacation dates",
+    "categoryId": "personal",
+    "dueDate": "2024-12-23T12:00:00.000Z",
+    "status": "in-progress",
+    "createdAt": "2024-12-11T16:15:00.000Z",
+    "reminderTime": "2024-12-23T09:00:00.000Z",
+    "parentTaskId": "5"
+  },
+  {
+    "id": "8",
+    "title": "Create presentation slides",
+    "description": "Design and create PowerPoint slides for quarterly report presentation",
+    "categoryId": "work",
+    "dueDate": "2024-12-19T12:00:00.000Z",
+    "status": "pending",
+    "createdAt": "2024-12-10T10:00:00.000Z",
+    "reminderTime": "2024-12-19T08:00:00.000Z",
+    "parentTaskId": "1"
+  },
+  {
+    "id": "9",
+    "title": "Gather performance data",
+    "description": "Collect Q3 metrics from all departments and compile into report format",
+    "categoryId": "work",
+    "dueDate": "2024-12-18T17:00:00.000Z",
+    "status": "completed",
+    "createdAt": "2024-12-10T10:30:00.000Z",
+    "reminderTime": null,
+    "parentTaskId": "1"
   }
 ]

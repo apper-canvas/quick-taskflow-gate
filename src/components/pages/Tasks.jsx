@@ -9,6 +9,7 @@ const Tasks = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [parentTaskForSubtask, setParentTaskForSubtask] = useState(null);
 
   useEffect(() => {
     // Check if create parameter is present in URL
@@ -24,20 +25,29 @@ const Tasks = () => {
     setEditingTask(null);
   };
 
-  const handleEditTask = (task) => {
+const handleEditTask = (task) => {
     setEditingTask(task);
+    setParentTaskForSubtask(null);
     setShowCreateForm(true);
   };
 
-  const handleFormSubmit = (task) => {
+  const handleCreateSubtask = (parentTask) => {
+    setParentTaskForSubtask(parentTask);
+    setEditingTask(null);
+    setShowCreateForm(true);
+  };
+
+const handleFormSubmit = (task) => {
     setShowCreateForm(false);
     setEditingTask(null);
+    setParentTaskForSubtask(null);
     // The TaskList component will automatically refresh
   };
 
   const handleFormCancel = () => {
     setShowCreateForm(false);
     setEditingTask(null);
+    setParentTaskForSubtask(null);
   };
 
   return (
@@ -72,8 +82,9 @@ const Tasks = () => {
       <AnimatePresence>
         {showCreateForm && (
           <div onClick={handleFormCancel}>
-            <TaskForm
+<TaskForm
               task={editingTask}
+              parentTask={parentTaskForSubtask}
               onSubmit={handleFormSubmit}
               onCancel={handleFormCancel}
             />
@@ -87,9 +98,11 @@ const Tasks = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
       >
-        <TaskList
+<TaskList
           showFilters={true}
           showSearch={true}
+          onEditTask={handleEditTask}
+          onCreateSubtask={handleCreateSubtask}
         />
       </motion.div>
 

@@ -11,7 +11,7 @@ import SkeletonLoader from '@/components/organisms/SkeletonLoader';
 import ErrorState from '@/components/organisms/ErrorState';
 import { taskService, categoryService } from '@/services';
 
-const TaskList = ({ showFilters = true, showSearch = true, limit }) => {
+const TaskList = ({ showFilters = true, showSearch = true, limit, onEditTask, onCreateSubtask }) => {
   const [tasks, setTasks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -48,8 +48,9 @@ const TaskList = ({ showFilters = true, showSearch = true, limit }) => {
     }
   };
 
-  const filterAndSortTasks = () => {
-    let filtered = [...tasks];
+const filterAndSortTasks = () => {
+    // Only show parent tasks (no subtasks) in main list
+    let filtered = tasks.filter(task => !task.parentTaskId);
 
     // Apply search filter
     if (searchTerm) {
@@ -233,11 +234,14 @@ const TaskList = ({ showFilters = true, showSearch = true, limit }) => {
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <TaskCard
+<TaskCard
                       task={task}
                       categories={categories}
                       onUpdate={handleTaskUpdate}
                       onDelete={handleTaskDelete}
+                      onEdit={onEditTask}
+                      onCreateSubtask={onCreateSubtask}
+                      showSubtasks={true}
                     />
                   </motion.div>
                 ))}
