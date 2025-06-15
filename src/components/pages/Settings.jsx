@@ -122,7 +122,7 @@ if (error) {
     );
   }
 return (
-    <div className="p-6 pb-8 max-w-full overflow-y-auto">
+    <div className="p-6 pb-8 max-w-full min-h-screen max-h-screen overflow-y-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
