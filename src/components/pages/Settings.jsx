@@ -19,7 +19,7 @@ const Settings = () => {
     loadPreferences();
   }, []);
 
-  const loadPreferences = async () => {
+const loadPreferences = async () => {
     setLoading(true);
     setError(null);
     try {
@@ -181,17 +181,17 @@ return (
             </div>
 
             <div className="space-y-4">
-              <Select
+<Select
                 label="Default View"
-                value={preferences?.defaultView || 'dashboard'}
-                onChange={(e) => updatePreference('defaultView', e.target.value)}
+                value={preferences?.default_view || 'dashboard'}
+                onChange={(e) => updatePreference('default_view', e.target.value)}
                 options={viewOptions}
               />
 
               <Select
                 label="Default Sort Order"
-                value={preferences?.sortOrder || 'dueDate'}
-                onChange={(e) => updatePreference('sortOrder', e.target.value)}
+                value={preferences?.sort_order || 'dueDate'}
+                onChange={(e) => updatePreference('sort_order', e.target.value)}
                 options={sortOptions}
               />
 
@@ -204,8 +204,8 @@ return (
 
               <Checkbox
                 label="Show completed tasks by default"
-                checked={preferences?.showCompletedTasks || false}
-                onChange={(e) => updatePreference('showCompletedTasks', e.target.checked)}
+                checked={preferences?.show_completed_tasks || false}
+                onChange={(e) => updatePreference('show_completed_tasks', e.target.checked)}
               />
             </div>
           </motion.div>
@@ -226,21 +226,20 @@ return (
               </h2>
             </div>
 
-            <div className="space-y-4">
+<div className="space-y-4">
               <Checkbox
                 label="Enable browser notifications"
-                checked={preferences?.notificationsEnabled || false}
-                onChange={(e) => updatePreference('notificationsEnabled', e.target.checked)}
+                checked={preferences?.notifications_enabled || false}
+                onChange={(e) => updatePreference('notifications_enabled', e.target.checked)}
               />
 
               <Select
                 label="Default Reminder Time"
-                value={preferences?.reminderOffset || 60}
-                onChange={(e) => updatePreference('reminderOffset', parseInt(e.target.value))}
+                value={preferences?.reminder_offset || 60}
+                onChange={(e) => updatePreference('reminder_offset', parseInt(e.target.value))}
                 options={reminderOffsetOptions}
-                disabled={!preferences?.notificationsEnabled}
+                disabled={!preferences?.notifications_enabled}
               />
-
               <div className="bg-gray-50 rounded-lg p-4">
                 <div className="flex items-start space-x-3">
                   <ApperIcon name="Info" className="w-5 h-5 text-info mt-0.5" />

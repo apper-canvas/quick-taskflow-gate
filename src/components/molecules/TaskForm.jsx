@@ -11,11 +11,11 @@ const TaskForm = ({ task, onSubmit, onCancel, parentTask }) => {
 const [formData, setFormData] = useState({
     title: '',
     description: '',
-    categoryId: '',
-    dueDate: '',
-    reminderTime: '',
+    category_id: '',
+    due_date: '',
+    reminder_time: '',
     status: 'pending',
-    parentTaskId: parentTask?.id || null
+    parent_task_id: parentTask?.id || null
   });
 const [categories, setCategories] = useState([]);
   const [parentTasks, setParentTasks] = useState([]);
@@ -29,17 +29,17 @@ useEffect(() => {
 setFormData({
         title: task.title || '',
         description: task.description || '',
-        categoryId: task.categoryId || '',
-        dueDate: task.dueDate ? format(new Date(task.dueDate), "yyyy-MM-dd'T'HH:mm") : '',
-        reminderTime: task.reminderTime ? format(new Date(task.reminderTime), "yyyy-MM-dd'T'HH:mm") : '',
+        category_id: task.category_id || '',
+        due_date: task.due_date ? format(new Date(task.due_date), "yyyy-MM-dd'T'HH:mm") : '',
+        reminder_time: task.reminder_time ? format(new Date(task.reminder_time), "yyyy-MM-dd'T'HH:mm") : '',
         status: task.status || 'pending',
-        parentTaskId: task.parentTaskId || null
+        parent_task_id: task.parent_task_id || null
       });
     } else if (parentTask) {
       setFormData(prev => ({
         ...prev,
-        parentTaskId: parentTask.id,
-        categoryId: parentTask.categoryId
+        parent_task_id: parentTask.id,
+        category_id: parentTask.category_id
       }));
     }
   }, [task, parentTask]);
@@ -71,12 +71,12 @@ const loadCategories = async () => {
       newErrors.title = 'Title is required';
     }
     
-    if (!formData.categoryId) {
-      newErrors.categoryId = 'Category is required';
+if (!formData.category_id) {
+      newErrors.category_id = 'Category is required';
     }
     
-    if (!formData.dueDate) {
-      newErrors.dueDate = 'Due date is required';
+if (!formData.due_date) {
+      newErrors.due_date = 'Due date is required';
     }
 
     setErrors(newErrors);
@@ -90,11 +90,11 @@ const loadCategories = async () => {
 
 setLoading(true);
     try {
-      const taskData = {
+const taskData = {
         ...formData,
-        dueDate: new Date(formData.dueDate).toISOString(),
-        reminderTime: formData.reminderTime ? new Date(formData.reminderTime).toISOString() : null,
-        parentTaskId: formData.parentTaskId || null
+        due_date: new Date(formData.due_date).toISOString(),
+        reminder_time: formData.reminder_time ? new Date(formData.reminder_time).toISOString() : null,
+        parent_task_id: formData.parent_task_id || null
       };
 
 let result;
@@ -180,22 +180,22 @@ return (
               />
             </div>
 
-            <Select
+<Select
               label="Category"
-              name="categoryId"
-              value={formData.categoryId}
+              name="category_id"
+              value={formData.category_id}
               onChange={handleChange}
               options={categoryOptions}
-              error={errors.categoryId}
+              error={errors.category_id}
               placeholder="Select a category"
               required
-/>
+            />
 
             {!parentTask && (
-              <Select
+<Select
                 label="Parent Task (Optional)"
-                name="parentTaskId"
-                value={formData.parentTaskId || ''}
+                name="parent_task_id"
+                value={formData.parent_task_id || ''}
                 onChange={handleChange}
                 options={[
                   { value: '', label: 'No parent task' },
@@ -215,21 +215,21 @@ return (
               required
             />
 
-            <Input
+<Input
               label="Due Date"
-              name="dueDate"
+              name="due_date"
               type="datetime-local"
-              value={formData.dueDate}
+              value={formData.due_date}
               onChange={handleChange}
-              error={errors.dueDate}
+              error={errors.due_date}
               required
             />
 
-            <Input
+<Input
               label="Reminder Time (Optional)"
-              name="reminderTime"
+              name="reminder_time"
               type="datetime-local"
-              value={formData.reminderTime}
+              value={formData.reminder_time}
               onChange={handleChange}
             />
 

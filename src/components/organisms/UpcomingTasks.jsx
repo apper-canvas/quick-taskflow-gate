@@ -26,8 +26,8 @@ const [upcomingTasks, categoriesData] = await Promise.all([
         taskService.getUpcoming(),
         categoryService.getAll()
       ]);
-      // Filter out subtasks from upcoming view to avoid duplicates
-      const parentTasks = upcomingTasks.filter(task => !task.parentTaskId);
+// Filter out subtasks from upcoming view to avoid duplicates
+      const parentTasks = upcomingTasks.filter(task => !task.parent_task_id);
       setTasks(parentTasks);
       setCategories(categoriesData);
     } catch (err) {

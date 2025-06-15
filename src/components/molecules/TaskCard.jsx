@@ -16,13 +16,12 @@ const TaskCard = ({ task, onUpdate, onDelete, categories = [], onEdit, onCreateS
   const [subtaskProgress, setSubtaskProgress] = useState({ total: 0, completed: 0, percentage: 0 });
   const [loadingSubtasks, setLoadingSubtasks] = useState(false);
 
-const category = categories.find(c => c.id === task.categoryId);
-  const dueDate = new Date(task.dueDate);
+const category = categories.find(c => c.id === task.category_id);
+  const dueDate = new Date(task.due_date);
   const isOverdue = isPast(dueDate) && task.status !== 'completed';
   const isDueToday = isToday(dueDate);
   const isDueThisWeek = isThisWeek(dueDate);
-  const isParentTask = !task.parentTaskId;
-
+  const isParentTask = !task.parent_task_id;
   useEffect(() => {
     if (showSubtasks && isParentTask) {
       loadSubtasks();
@@ -48,7 +47,7 @@ const category = categories.find(c => c.id === task.categoryId);
     if (!isParentTask) return;
     
     try {
-      const progress = await taskService.getSubtaskProgress(task.id);
+const progress = await taskService.getSubtaskProgress(task.id);
       setSubtaskProgress(progress);
     } catch (error) {
       console.error('Failed to load subtask progress');

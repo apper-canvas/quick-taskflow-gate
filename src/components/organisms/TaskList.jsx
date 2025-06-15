@@ -53,16 +53,16 @@ const filterAndSortTasks = () => {
     let filtered = tasks.filter(task => !task.parentTaskId);
 
     // Apply search filter
-    if (searchTerm) {
+if (searchTerm) {
       filtered = filtered.filter(task =>
         task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         task.description?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // Apply category filter
+// Apply category filter
     if (selectedCategory) {
-      filtered = filtered.filter(task => task.categoryId === selectedCategory);
+      filtered = filtered.filter(task => task.category_id === selectedCategory);
     }
 
     // Apply status filter
@@ -71,16 +71,16 @@ const filterAndSortTasks = () => {
     }
 
     // Apply sorting
-    filtered.sort((a, b) => {
+filtered.sort((a, b) => {
       switch (sortBy) {
         case 'dueDate':
-          return new Date(a.dueDate) - new Date(b.dueDate);
+          return new Date(a.due_date) - new Date(b.due_date);
         case 'title':
           return a.title.localeCompare(b.title);
         case 'status':
           return a.status.localeCompare(b.status);
         case 'createdAt':
-          return new Date(b.createdAt) - new Date(a.createdAt);
+          return new Date(b.created_at) - new Date(a.created_at);
         default:
           return 0;
       }
