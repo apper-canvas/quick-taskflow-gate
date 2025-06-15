@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "title": "Complete quarterly report",
+    "description": "Compile Q3 performance metrics and create presentation for board meeting",
+    "categoryId": "work",
+    "dueDate": "2024-12-20T17:00:00.000Z",
+    "status": "in-progress",
+    "createdAt": "2024-12-10T09:00:00.000Z",
+    "reminderTime": "2024-12-20T08:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "title": "Doctor appointment",
+    "description": "Annual check-up with Dr. Smith",
+    "categoryId": "personal",
+    "dueDate": "2024-12-18T14:30:00.000Z",
+    "status": "pending",
+    "createdAt": "2024-12-08T10:30:00.000Z",
+    "reminderTime": "2024-12-18T13:30:00.000Z"
+  },
+  {
+    "id": "3",
+    "title": "Grocery shopping",
+    "description": "Buy ingredients for weekend dinner party",
+    "categoryId": "personal",
+    "dueDate": "2024-12-17T18:00:00.000Z",
+    "status": "completed",
+    "createdAt": "2024-12-15T08:00:00.000Z",
+    "reminderTime": null
+  },
+  {
+    "id": "4",
+    "title": "Review code for new feature",
+    "description": "Review pull request #245 for user authentication improvements",
+    "categoryId": "work",
+    "dueDate": "2024-12-19T16:00:00.000Z",
+    "status": "pending",
+    "createdAt": "2024-12-12T11:15:00.000Z",
+    "reminderTime": "2024-12-19T10:00:00.000Z"
+  },
+  {
+    "id": "5",
+    "title": "Plan vacation itinerary",
+    "description": "Research and book activities for summer vacation in Italy",
+    "categoryId": "personal",
+    "dueDate": "2024-12-25T12:00:00.000Z",
+    "status": "pending",
+    "createdAt": "2024-12-11T15:45:00.000Z",
+    "reminderTime": "2024-12-24T10:00:00.000Z"
+  }
+]

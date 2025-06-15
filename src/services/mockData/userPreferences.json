@@ -1,0 +1,8 @@
+{
+  "defaultView": "dashboard",
+  "notificationsEnabled": true,
+  "theme": "light",
+  "sortOrder": "dueDate",
+  "showCompletedTasks": false,
+  "reminderOffset": 60
+}
